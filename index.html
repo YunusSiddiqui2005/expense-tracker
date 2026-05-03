@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Expense Tracker</title>
+
+  <link rel="icon"
+    href="https://img.freepik.com/free-vector/wallet-glyph-style-blue-colour_78370-7159.jpg?semt=ais_hybrid&w=740&q=80"
+    type="image/png">
+
+  <link rel="stylesheet" href="style.css" />
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for the Expense Overview -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fa-solid fa-wallet" style="color: #4361ee; font-size: 24px;"></i>
+        <h2>Expense Tracker</h2>
+      </div>
+      <ul class="nav-links">
+        <li class="active"><i class="fa-solid fa-house"></i> Dashboard</li>
+        <li><i class="fa-solid fa-list-ul"></i> Transactions</li>
+        <li><i class="fa-solid fa-tags"></i> Categories</li>
+        <li><i class="fa-solid fa-chart-pie"></i> Reports</li>
+        <li><i class="fa-solid fa-gear"></i> Settings</li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="promo-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Wallet">
+          <p>Manage your money smartly</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Header -->
+      <header>
+        <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
+          <!-- Hamburger Icon for Mobile -->
+          <i class="fa-solid fa-bars menu-btn" id="menuBtn"></i>
+          <div class="welcome-text">Welcome, User 👋</div>
+        </div>
+        <div class="header-right">
+          <div class="date-picker"><i class="fa-regular fa-calendar"></i> Today</div>
+          <div class="notification"><i class="fa-regular fa-bell"></i></div>
+        </div>
+      </header>
+
+      <!-- Summary Cards -->
+      <section class="summary-cards">
+        <div class="card balance-card">
+          <h4>Total Balance</h4>
+          <h1 id="balance">₹0</h1>
+          <i class="fa-solid fa-wallet card-icon"></i>
+        </div>
+        <div class="card income-card">
+          <h4>Total Income</h4>
+          <h1 id="money-plus" class="money plus">+₹0</h1>
+          <i class="fa-solid fa-arrow-turn-down card-icon income-icon"></i>
+        </div>
+        <div class="card expense-card">
+          <h4>Total Expense</h4>
+          <h1 id="money-minus" class="money minus">-₹0</h1>
+          <i class="fa-solid fa-arrow-turn-up card-icon expense-icon"></i>
+        </div>
+      </section>
+
+      <!-- Bottom Grid (Form, List, Chart) -->
+      <section class="bottom-grid">
+
+        <!-- Left Column: Add Transaction & History -->
+        <div class="left-col">
+
+          <div class="panel add-transaction">
+            <h3>Add Transaction</h3>
+            <form id="form">
+              <div class="form-row">
+                <div class="form-control">
+                  <label for="text">Title</label>
+                  <input type="text" id="text" placeholder="e.g. Food, Salary" />
+                </div>
+                <div class="form-control">
+                  <label for="amount">Amount (+ Income, - Expense)</label>
+                  <input type="number" id="amount" placeholder="e.g. 500" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-control">
+                  <label for="category">Category</label>
+                  <select id="category">
+                    <option value="Income">Income (Salary, etc.)</option>
+                    <option value="Food">Food</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+                <button class="btn">Add</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="panel recent-transactions">
+            <h3>Recent Transactions</h3>
+            <ul id="list" class="list">
+              <!-- Transactions will be added here by JS -->
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Expense Overview Chart -->
+        <div class="right-col">
+          <div class="panel chart-panel">
+            <h3>Expense Overview</h3>
+            <div class="chart-container">
+              <canvas id="expenseChart"></canvas>
+            </div>
+            <div id="chart-legend" class="chart-legend">
+              <!-- Legend generated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Footer -->
+      <footer class="dashboard-footer">
+        <div class="social-links">
+          <!-- Apne asli profile links in double quotes "" ke andar daal dena -->
+          <a href="https://www.linkedin.com/in/mohammad-yunus-siddiqui/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://github.com/YunusSiddiqui2005/expense-tracker" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.instagram.com/zeroand_1.ai/" target="_blank" title="Instagram"><i
+              class="fa-brands fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2026 Yunus. All rights reserved. | 6th Semester Major Project</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Welcome Name Popup Modal -->
+  <div id="welcomeModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Welcome to Expense Tracker! 🚀</h2>
+      <p>Please enter your name to continue</p>
+      <input type="text" id="userNameInput" placeholder="Enter your name..." />
+      <button id="saveNameBtn" class="btn">Let's Go</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content" style="position: relative;">
+      <button id="closeSettings" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+      <h2><i class="fa-solid fa-gear"></i> Settings</h2>
+
+      <div class="setting-item">
+        <span>Dark Mode</span>
+        <label class="switch">
+          <input type="checkbox" id="darkModeToggle">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <span>Backup Data</span>
+        <button id="exportBtn" class="btn small-btn" style="background:#2ecc71;"><i class="fa-solid fa-download"></i>
+          Download</button>
+      </div>
+
+      <div class="setting-item">
+        <span>Restore Data</span>
+        <input type="file" id="importFile" accept=".json" style="display: none;" />
+        <button id="importBtn" class="btn small-btn" style="background:#ffa502;"><i class="fa-solid fa-upload"></i>
+          Upload</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
